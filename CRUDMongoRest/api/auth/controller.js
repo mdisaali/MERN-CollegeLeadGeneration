@@ -4,6 +4,7 @@ const {
 } = require('./service');
 
 const signupAfterValidation = async (req, res) => {
+    console.log(req.body);
     try {
         const newUser = await signup(req.body);
         res.send(newUser);

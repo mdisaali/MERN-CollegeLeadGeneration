@@ -10,9 +10,6 @@ class Login extends Component {
 			username: '',
 			password: ''
 		};
-
-
-		this.displayLogin = this.displayLogin.bind(this);
 	}
 
 	update=(e)=> {
@@ -21,22 +18,26 @@ class Login extends Component {
 		this.setState({
 			[name]: value
 		});
-	}
+    }
+    
+    loginUser=async(event)=>{
+        event.preventDefault();
+        const reqBody ={
+            username: this.state.username,
+            password: this.state.password
+        }
 
-	async displayLogin(e) {
-		const response = await axios.post(
-            'http://localhost:5555/auth/login',
-            {
-                username: this.state.username,
-                password: this.state.password
-            },
-        );
-        console.log(response);
-	}
+        try{
+            const responseData = await axios.post('http://localhost:5555/auth/login', reqBody);
+            console.log(responseData.data);
+        }catch(err){
+            console.log(err);
+        }
+    }
 
 	render() {
 		return (
-			 <form onSubmit={this.displayLogin}>
+			 <form onSubmit={this.loginUser}>
                 <h3>Sign In</h3>
 
                 <div className="form-group">

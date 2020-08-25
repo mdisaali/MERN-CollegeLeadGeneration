@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Register extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			fullname: '',
+			username: '',
+			password: '',
 			email: '',
-			password: ''
+			phone: ''
 		};
-
-		this.update = this.update.bind(this);
-
-		this.displayLogin = this.displayLogin.bind(this);
 	}
 
-	update(e) {
+	update=(e)=> {
 		let name = e.target.name;
 		let value = e.target.value;
 		this.setState({
@@ -24,40 +22,74 @@ class Register extends Component {
 		});
 	}
 
-	displayLogin(e) {
-		e.preventDefault();
-		console.log('You have successfully registered');
-		console.log(this.state);
-		this.setState({
-			fullname: '',
-			email: '',
-			password: ''
-		});
+	register=async(event)=>{
+		event.preventDefault();
+		const reqBody={
+			email: this.state.email,
+			username: this.state.username,
+			password: this.state.password,
+			phone: this.state.phone
+		}
+
+		try{
+		const resonseData= await axios.post('http://localhost:5555/auth/signup', reqBody);
+		console.log(resonseData);
+		}catch(err){
+			console.log(err);
+		}
 	}
 
 	render() {
 		return (
-			<form>
+			<form onSubmit={this.register}>
                 <h3>Sign Up</h3>
 
                 <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" />
+                    <label>Email</label>
+                    <input 
+                        type="text" 
+                        name="email"
+                        className="form-control" 
+                        placeholder="Enter email" 
+                        onChange={this.update}
+                        value={this.state.email}
+                        />
                 </div>
 
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" />
+				<div className="form-group">
+                    <label>Phone</label>
+                    <input 
+                        type="text" 
+                        name="phone"
+                        className="form-control" 
+                        placeholder="Enter phone" 
+                        onChange={this.update}
+                        value={this.state.phone}
+                        />
                 </div>
 
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+				<div className="form-group">
+                    <label>Usename</label>
+                    <input 
+                        type="text" 
+                        name="username"
+                        className="form-control" 
+                        placeholder="Enter username" 
+                        onChange={this.update}
+                        value={this.state.username}
+                        />
                 </div>
 
-                <div className="form-group">
+				<div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input 
+                        type="text" 
+                        name="password"
+                        className="form-control" 
+                        placeholder="Enter password" 
+                        onChange={this.update}
+                        value={this.state.password}
+                        />
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
