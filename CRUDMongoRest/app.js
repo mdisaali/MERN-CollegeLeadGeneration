@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require("cors");
 
 const authRoutes = require("./api/auth/routes");
+const collegeRoutes = require('./api/college/routes')
 
 const db = require("./config/db.config");
 mongoose
@@ -35,6 +36,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
 app.use('/auth', authRoutes)
+
+app.use('/colleges', collegeRoutes)
 
 // set port, listen for requests
 app.listen(5555, () => {
