@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
+const {create} =require('../college/service')
 const User = require('./model');
 mongoose.model("user");
 
@@ -12,10 +14,12 @@ const login = async (username, password) => {
         }
         const match = await bcrypt.compare(password, loggedInUser.password);
         if (match) {
+            const token = jwt.sign({username: username}, 'thegivenpayloadinto', {expiresIn:'24h'});
             loggedInUser.password = undefined;
+            loggedInUser.token = token;
             return loggedInUser;
         } else {
-            throw 'Invalid Password. Please Try Again.. '
+            throw 'Invalid Password. Please Try Again.. ';
         }
     } catch (err) {
         throw err;

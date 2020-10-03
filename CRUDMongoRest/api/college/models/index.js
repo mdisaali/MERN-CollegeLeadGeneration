@@ -3,10 +3,9 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const collegeSchema = mongoose.Schema(
   {
-    name: String
-  },
-  { timestamps: true }
-)
+    buffer: [Buffer]
+  }
+  )
 
 collegeSchema.plugin(uniqueValidator);
 

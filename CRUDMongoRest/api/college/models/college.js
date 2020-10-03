@@ -1,0 +1,3 @@
+const College = {
+    name:String
+}

@@ -17,9 +17,12 @@ const signupAfterValidation = async (req, res) => {
 const loginUser = async (req, res) => {
     console.log(req.body,"reqbody");
     const { username, password } = req.body;
+    const resData = {};
     try {
         const loggedInUser = await login(username, password);
-        res.send(loggedInUser);
+        resData.token = loggedInUser.token;
+        resData.user = loggedInUser;
+        res.json(resData);
     }
     catch (err) {
         res.status(400).send({ message: err })
