@@ -3,7 +3,6 @@ const {
     findByCollegeName
 } = require('../service');
 const College = require('../models');
-const CollegeModel = require('../models/college')
 const mongoose = require('mongoose');
 mongoose.model("college");
 
@@ -23,26 +22,22 @@ const list = async (searchString) => {
     }
 }
 
-const create = async () => {
-    console.log('abcde')
+const create = async (collegeBody) => {
 
-    try{
-        const collegeDTO = new CollegeModel({
-            name: 'shgknm'
-        })
-    
-        let buf = new Buffer.from(JSON.stringify(collegeDTO))
-    
+    try {
         const college = new College({
-            buffer: buf
+            name: collegeBody.name,
+            courses: collegeBody.courses,
+            city: collegeBody.city,
+            rating: 0.0
         });
-    
+
         const newUser = await college.save();
-        console.log(newUser);
-    }catch(err){
+        return newUser;
+    } catch (err) {
         throw err;
     }
-    
+
 }
 module.exports = {
     list,
