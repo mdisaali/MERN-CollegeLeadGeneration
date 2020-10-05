@@ -1,8 +1,9 @@
 const app = require("express").Router();
 
 const { list, create } = require('../controller');
+const { authenticateJwt } = require('../../common/jwtHandler')
 
-app.get('/', (req, res, next) => {
+app.get('/', authenticateJwt, (req, res, next) => {
     try {
         if (null == req.body.searchString || undefined == req.body.searchString) {
             throw 'Undefined or null search string'
@@ -19,8 +20,7 @@ app.get('/', (req, res, next) => {
     }
 });
 
-app.post('/', (req, res, next) => {
-    console.log(req.body);
+app.post('/', authenticateJwt, (req, res, next) => {
     try {
         create(req.body).then((response) => {
             res.send(response)

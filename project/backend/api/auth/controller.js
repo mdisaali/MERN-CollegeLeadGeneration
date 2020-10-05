@@ -15,11 +15,12 @@ const signupAfterValidation = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-    console.log(req.body,"reqbody");
+    console.log(req.body, "reqbody");
     const { username, password } = req.body;
     const resData = {};
     try {
         const loggedInUser = await login(username, password);
+        console.log('token ' + loggedInUser.token);
         resData.token = loggedInUser.token;
         resData.user = loggedInUser;
         res.json(resData);
